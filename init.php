@@ -9,7 +9,7 @@ namespace Ashtree;
 function Autoload($className) {
     $className = str_replace(['\\', __NAMESPACE__ . '/'], ['/', ''], $className);
     require_once(__DIR__ . "/{$className}.php");
-    echo __DIR__ . "/{$className}.php<br />";
+    #echo __DIR__ . "/{$className}.php<br />";
 }
 
 spl_autoload_register('\Ashtree\Autoload');
