@@ -23,9 +23,14 @@ class Select extends \Ashtree\UI\Widget {
         $attribs = $params;
         if (isset($params['usekey']))  unset($attribs['usekey']);
         if (isset($params['options'])) unset($attribs['options']);
+        if (isset($params['empty']))   unset($attribs['empty']);
 
         parent::__construct($name, $attribs);
         
+        if (isset($params['empty'])) {
+            if (!is_array($params['empty'])) $params['empty'] = [''=>$params['empty']];
+            $this->setOptions($params['empty'], true);
+        }
         if (isset($params['options'])) $this->setOptions($params['options'], @$params['usekey'], @$params['value']);
     }
     

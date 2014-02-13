@@ -1,5 +1,5 @@
 <?php
-namespace Bootstrap\UI;
+namespace Ashtree\Bootstrap\UI;
 
 require_once(dirname(__FILE__) . "/../../UI/Panel.php");
 
