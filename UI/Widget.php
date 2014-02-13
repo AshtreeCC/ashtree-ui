@@ -46,12 +46,34 @@ class Widget {
         
         $this->setInput($this->getTag());
 
-        if (isset($params['value']))       $this->setValue($params['value']);
-        if (isset($params['validate']))    $this->setValidate($params['validate']);
-        if (isset($params['label']))       $this->setLabel($params['label']);
-        if (isset($params['addon']))       $this->setAddon($params['addon']);
-        if (isset($params['help']))        $this->setHelp($params['help']);
-        if (isset($params['placeholder'])) $this->setAttrib('placeholder', $params['placeholder']);
+        if (isset($params['value'])) {
+            $this->setValue($params['value']);
+            unset($this->attrib['value']);
+        }
+        if (isset($params['class'])) {
+            $this->addClass($params['class']);
+            unset($this->attrib['class']);
+        }
+        if (isset($params['validate'])) {
+            $this->setValidate($params['validate']);
+            unset($this->attrib['validate']);
+        }
+        if (isset($params['label'])) {
+            $this->setLabel($params['label']);
+            unset($this->attrib['label']);
+        }
+        if (isset($params['addon'])) {
+            $this->setAddon($params['addon']);
+            unset($this->attrib['addon']);
+        }
+        if (isset($params['help'])) {
+            $this->setHelp($params['help']);
+            unset($this->attrib['help']);
+        }
+            
+        foreach((array)$this->attrib as $name=>$value) {
+            $this->setAttrib($name, $value);
+        }
     }
     
     protected function addClass($class) {
@@ -124,7 +146,7 @@ class Widget {
         $this->addon->nodeValue = $content;
     }
     
-    protected function setAttrib($name, $value) {
+    public function setAttrib($name, $value) {
         $this->input->setAttribute($name, $value);
     }
     

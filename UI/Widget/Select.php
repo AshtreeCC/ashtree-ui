@@ -18,18 +18,26 @@ class Select extends \Ashtree\UI\Widget {
     
     protected $type = 'select';
     
-    protected function setValue($value){
-        if (isset($this->attrib['options'])) {
-            foreach($this->attrib['options'] as $option=>$text) {
-                $key = (isset($this->attrib['usekey']) && $this->attrib['usekey']) ? $option : $text;
-                $option = $this->widget->createElement('option');
-                $option->setAttribute('value', $key);
-                $option->nodeValue = $text;
-                if ($value == $key) $option->setAttribute('selected', 'selected');
-                $this->input->appendChild($option);
-            }
+    public function __construct($name, $params=null){
+        
+        $attribs = $params;
+        if (isset($params['usekey']))  unset($attribs['usekey']);
+        if (isset($params['options'])) unset($attribs['options']);
+
+        parent::__construct($name, $attribs);
+        
+        if (isset($params['options'])) $this->setOptions($params['options'], @$params['usekey'], @$params['value']);
+    }
+    
+    protected function setOptions($options, $usekey=false, $value=null){
+        foreach($options as $option=>$text) {
+            $key = ($usekey) ? $option : $text;
+            $option = $this->widget->createElement('option');
+            $option->setAttribute('value', $key);
+            $option->nodeValue = $text;
+            if ($value == $key) $option->setAttribute('selected', 'selected');
+            $this->input->appendChild($option);
         }
-        unset($this->attrib['options']);
     }
 }
 
